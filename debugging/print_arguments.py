@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 import sys
 
-if __name__ == "__main__":
-    for i in range(len(sys.argv)):
-        print(f"{sys.argv[i]}")
+for i in range(1, len(sys.argv)):  # Commence à 1 pour ignorer le nom du fichier
+    print(sys.argv[i])
+
         
