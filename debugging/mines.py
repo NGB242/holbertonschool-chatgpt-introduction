@@ -12,6 +12,8 @@ class Minesweeper:
         self.mines = set(random.sample(range(width * height), mines))
         self.field = [[' ' for _ in range(width)] for _ in range(height)]
         self.revealed = [[False for _ in range(width)] for _ in range(height)]
+        self.total_cells = width * height
+        self.mines_count = mines
 
     def print_board(self, reveal=False):
         clear_screen()
@@ -51,6 +53,11 @@ class Minesweeper:
                         self.reveal(nx, ny)
         return True
 
+    def has_won(self):
+        """Check if the player has revealed all non-mine cells."""
+        revealed_cells = sum(sum(row) for row in self.revealed)
+        return revealed_cells == self.total_cells - self.mines_count
+
     def play(self):
         while True:
             self.print_board()
@@ -64,6 +71,10 @@ class Minesweeper:
                     self.print_board(reveal=True)
                     print("Game Over! You hit a mine.")
                     break
+                if self.has_won():
+                    self.print_board(reveal=True)
+                    print("Congratulations! You've won the game!")
+                    break
             except ValueError:
                 print("Invalid input. Please enter valid numbers.")
             except KeyboardInterrupt:
@@ -73,4 +84,4 @@ class Minesweeper:
 if __name__ == "__main__":
     game = Minesweeper()
     game.play()
-    
+
